@@ -1,4 +1,4 @@
-http://www.digikey.com/product-search/en?keywords=%20475-2510-1-ND	LED Rojo 0805 (1x)
+﻿http://www.digikey.com/product-search/en?keywords=%20475-2510-1-ND	LED Rojo 0805 (1x)
 http://www.digikey.com/product-search/en?keywords=%20475-2730-1-ND	LED Verde 0805 (1x)
 http://www.digikey.com/product-search/en?keywords=1N4148WSFSCT-ND	1N4148 SOD323 (7x)
 http://www.digikey.com/product-search/en?keywords=%20401-1426-1-ND	Botón 4.6x2.8mm (2x)
@@ -14,4 +14,5 @@ http://www.digikey.com/product-search/en?keywords=P1.0KADCT-ND		Resistencia 1k 0
 http://www.digikey.com/product-search/en?keywords=P10KADCT-ND		Resistencia 10k 0805 (3x)
 http://www.digikey.com/product-search/en?keywords=P100ADCT-ND		Resistencia 100 0805 (1x)
 http://www.digikey.com/product-search/en?keywords=MMSZ5231BT1GOSCT-ND	Diodo Zener 5.1V 500mW 0805
+https://www.alibaba.com/product-detail/simcom-SIM808-cheaper-than-SIM908-GSM_1981785242.html?spm=a2700.7724838.0.0.m9Usyn SIMCOM 808	
 
