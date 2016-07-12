@@ -14,4 +14,8 @@ http://www.digikey.com/product-search/en?keywords=P1.0KADCT-ND		Resistencia 1k 0
 http://www.digikey.com/product-search/en?keywords=P10KADCT-ND		Resistencia 10k 0805 (3x)
 http://www.digikey.com/product-search/en?keywords=P100ADCT-ND		Resistencia 100 0805 (1x)
 http://www.digikey.com/product-search/en?keywords=MMSZ5231BT1GOSCT-ND	Diodo Zener 5.1V 500mW 0805
+SIM808
+https://www.adafruit.com/product/2637
+http://www.tme.eu/en/details/sim808/gsmgpsgprshspaedgelte-modules/simcom/?utm_source=octopart.com&utm_medium=cpc&utm_campaign=compare-2016-07
+http://www.ebay.com/itm/SIM808-Chip-for-GSM-GPRS-GPS-Quad-Band-Wireless-Module-/272215670585
 
