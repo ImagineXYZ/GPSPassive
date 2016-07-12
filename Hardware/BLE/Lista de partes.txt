@@ -1,0 +1,3 @@
+nRF51822	http://www.digikey.com/product-detail/en/nordic-semiconductor-asa/NRF51822-QFAB-R7/1490-1032-1-ND/4626400
+
+MDBT40	http://www.raytac.com/products.php
