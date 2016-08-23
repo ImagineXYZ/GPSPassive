@@ -1,0 +1,56 @@
+PLOT REPORT
+-----------
+
+Report File:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout (PCB - PLOT REPORT).txt
+Report Written:     Thursday, August 18, 2016
+Design Path:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.pcb
+Design Title:       
+Created:            16/08/2016 11:09:58 a.m.
+Last Saved:         16/08/2016 11:44:39 a.m.
+Editing Time:       65 min
+Units:              mm (precision 3)
+
+
+Device Settings
+===============
+
+
+Gerber Settings
+===============
+
+    Leading zero suppression.
+    G01 assumed throughout.
+    Line termination <*> <CR> <LF>.
+    3.5 format absolute inches.
+    Format commands defined in Gerber file.
+    Aperture table defined in Gerber file.
+
+
+
+Plots Output
+============
+
+    Plot Job: "C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.mop"
+
+
+Gerber Output
+=============
+
+C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout - Top Copper.gbr
+
+    Layers:
+    ------------------
+    Top Copper
+    Board Outlines
+
+    D-Code Shape  (thou)
+    ----------------------------------------------
+    D10    Round 25.00
+    D11    Round 5.00
+    D12    Round 5.91
+    D13    Rectangle 21.65 X 57.87  Rotation 90
+    D14    Square 78.74  Hole 23.62
+    D15    Round 78.74  Hole 23.62
+    D16    Round 15.00
+
+End Of Report.

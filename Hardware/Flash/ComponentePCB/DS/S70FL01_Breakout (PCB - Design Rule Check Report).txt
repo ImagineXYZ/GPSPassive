@@ -1,0 +1,64 @@
+Design Rule Check Report
+------------------------
+
+Report File:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout (PCB - Design Rule Check Report).txt
+Report Written:     Tuesday, August 16, 2016
+Design Path:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.pcb
+Design Title:       
+Created:            16/08/2016 11:09:58 a.m.
+Last Saved:         16/08/2016 11:41:53 a.m.
+Editing Time:       34 min
+Units:              mm (precision 3)
+
+
+Results
+=======
+
+
+No errors found
+
+
+Settings
+========
+
+
+Spacings
+
+=========
+
+Tracks        Yes
+Pads and Vias Yes
+Shapes        Yes
+Text          Yes
+Board         Yes
+Drills        Yes
+Components    No
+
+
+Manufacturing
+
+==============
+
+Drill Breakout                  No
+Drill Backoff                   No
+Silkscreen Overlap              No
+Copper Text In Board            No
+Min Track Width                 No
+Min Annular Ring                No
+Min Paste Size                  No
+Vias In Pads                    No
+Unplated Vias                   No
+Unplated Pads With Inner Tracks No
+
+
+Nets
+
+=====
+
+Net Completion               Yes
+Dangling Tracks              Yes
+Net Track Length Differences No
+
+
+
+End Of Report.

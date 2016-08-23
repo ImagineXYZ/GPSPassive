@@ -1,0 +1,18 @@
+Schematic and PCB Check Report
+------------------------------
+
+Report File:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout (PCB - Schematic and PCB Check Report).txt
+Report Written:     Tuesday, August 16, 2016
+Design Path:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.pcb
+Design Title:       
+Created:            16/08/2016 11:09:58 a.m.
+Last Saved:         16/08/2016 11:37:00 a.m.
+Editing Time:       29 min
+Units:              mm (precision 3)
+
+
+Checking integrity of Schematic "C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.sch" with PCB "C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.pcb"
+==================================================================================================================================================================================================================================================================================================================
+
+
+End Of Report.

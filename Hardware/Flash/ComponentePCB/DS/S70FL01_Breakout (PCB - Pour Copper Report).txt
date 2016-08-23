@@ -1,0 +1,14 @@
+Pour Copper Report
+------------------
+
+Report File:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout (PCB - Pour Copper Report).txt
+Report Written:     Tuesday, August 16, 2016
+Design Path:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.pcb
+Design Title:       
+Created:            16/08/2016 11:09:58 a.m.
+Last Saved:         16/08/2016 11:41:53 a.m.
+Editing Time:       34 min
+Units:              mm (precision 3)
+
+
+End Of Report.
