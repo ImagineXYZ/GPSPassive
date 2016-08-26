@@ -17,11 +17,11 @@
 #define BT_RTR "BT_RTR"
 
 //FONA
-#define FONA_RI 14
-#define FONA_KEY 15
-#define FONA_RST 17
-#define FONA_PS 8
-#define FONA_NS 9
+#define FONA_RI A1
+#define FONA_KEY A0
+#define FONA_RST 10
+#define FONA_PS 6
+#define FONA_NS 7
 
 //General
 #define Serial SERIAL_PORT_USBVIRTUAL
@@ -34,7 +34,7 @@
 
 //Se instancian los puertos SPI y UART a partir de los SERCOM del SAMD21
 //Ver https://learn.adafruit.com/using-atsamd21-sercom-to-add-more-spi-i2c-serial-ports
-SPIClass sdSPI (&sercom1, 12, 13, 11, SPI_PAD_0_SCK_1, SERCOM_RX_PAD_3);
+SPIClass sdSPI (&sercom1, 11, 13, 12, SPI_PAD_3_SCK_1, SERCOM_RX_PAD_0);
 Uart Serial2 (&sercom2, 3, 4, SERCOM_RX_PAD_1, UART_TX_PAD_0);
 
 void SERCOM2_Handler()
@@ -71,7 +71,7 @@ void fona_setup() {
   pinMode(FONA_PS, INPUT);
   pinMode(FONA_NS, INPUT);
   digitalWrite(FONA_KEY, HIGH); //Se coloca el pin 15 en bajo para habilitar FONA (Key)
-  while(!digitalRead(FONA_PS)){
+  while (!digitalRead(FONA_PS)) {
     digitalWrite(FONA_KEY, LOW);
     delay(2000);
     digitalWrite(FONA_KEY, HIGH);
@@ -83,7 +83,7 @@ void fona_setup() {
   if (! fona.begin(*fonaSerial)) {
     while (1);
   }
-  
+
   //Se habilita el GPS
   fona.enableGPS(true);
   fona.setGPRSNetworkSettings(F("kolbi3g"), F(""), F(""));
@@ -132,6 +132,8 @@ void setup() {
   //Verificar modo de emergencia al encender
   check_em_mode();
 
+  pinMode(2, INPUT);
+
   //Se colocan los pines 25 y 26 (LEDs) en modo salida
   pinMode(25, OUTPUT);
   pinMode(26, OUTPUT);
@@ -148,13 +150,13 @@ void setup() {
 void check_em_mode() {
   String line;
   File emg_file = SD.open("emg.txt");
-  
+
   if (emg_file) {
     line = emg_file.readStringUntil('\n');
   }
   char data[5];
   line.toCharArray(data, 5);
-  if(strcmp(data, EM_ON) == 0){
+  if (strcmp(data, EM_ON) == 0) {
     em_mode = true;
   }
 }
@@ -178,7 +180,7 @@ void process_sms(int8_t sms_num) {
       n++;
       continue;
     }
-    
+
     //Se intenta obtener el número del remitente del mensaje
     if (! fona.getSMSSender(n, sender, sizeof(sender))) {
       //No se logra obtener (número privado)
@@ -308,7 +310,7 @@ bool em_write(String msg) {
     delay(10);
     fona.HTTP_POST_start(url, F("application/json"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&msg_len);
     fona.HTTP_POST_end();
-    if(statuscode == 200){
+    if (statuscode == 200) {
       return true;
     } else {
       return false;
@@ -334,21 +336,21 @@ void send_log_contents() {
     }
   }
 }
-  //===========================Loop=================================
-  void loop() {
-    int8_t sms_num = fona.getNumSMS();
-    if (sms_num > 0) {
-      process_sms(sms_num);
-    } else if (ble.isConnected()) {
-      send_log_contents();
-    }
-    t1 = millis();
-    String status_str = get_gps();
-    if (em_mode) {
-      em_write(status_str);
-    } else {
-      assert_write(status_str);
-    }
-    delay(DELAY * 1000);
+//===========================Loop=================================
+void loop() {
+  int8_t sms_num = fona.getNumSMS();
+  if (sms_num > 0) {
+    process_sms(sms_num);
+  } else if (ble.isConnected()) {
+    send_log_contents();
   }
+  t1 = millis();
+  String status_str = get_gps();
+  if (em_mode) {
+    em_write(status_str);
+  } else {
+    assert_write(status_str);
+  }
+  delay(DELAY * 1000);
+}
 

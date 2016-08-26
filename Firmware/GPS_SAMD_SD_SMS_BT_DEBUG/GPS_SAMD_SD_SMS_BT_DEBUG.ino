@@ -17,15 +17,15 @@
 #define BT_RTR "BT_RTR"
 
 //FONA
-#define FONA_RI 14
-#define FONA_KEY 15
-#define FONA_RST 17
-#define FONA_PS 8
-#define FONA_NS 9
+#define FONA_RI A1
+#define FONA_KEY A0
+#define FONA_RST 10
+#define FONA_PS 6
+#define FONA_NS 7
 
 //General
 #define Serial SERIAL_PORT_USBVIRTUAL
-#define SD_CS 7
+#define SD_CS A2
 #define DIST_TRIG 10.0
 #define TIME_TRIG 90
 #define DELAY 10
@@ -34,7 +34,7 @@
 
 //Se instancian los puertos SPI y UART a partir de los SERCOM del SAMD21
 //Ver https://learn.adafruit.com/using-atsamd21-sercom-to-add-more-spi-i2c-serial-ports
-SPIClass sdSPI (&sercom1, 12, 13, 11, SPI_PAD_0_SCK_1, SERCOM_RX_PAD_3);
+SPIClass sdSPI (&sercom1, 11, 13, 12, SPI_PAD_3_SCK_1, SERCOM_RX_PAD_0);
 Uart Serial2 (&sercom2, 3, 4, SERCOM_RX_PAD_1, UART_TX_PAD_0);
 
 void SERCOM2_Handler()
@@ -71,7 +71,7 @@ void fona_setup() {
   pinMode(FONA_PS, INPUT);
   pinMode(FONA_NS, INPUT);
   digitalWrite(FONA_KEY, HIGH); //Se coloca el pin 15 en bajo para habilitar FONA (Key)
-  while(!digitalRead(FONA_PS)){
+  while (!digitalRead(FONA_PS)) {
     digitalWrite(FONA_KEY, LOW);
     delay(2000);
     digitalWrite(FONA_KEY, HIGH);
@@ -119,7 +119,7 @@ void sercom_setup() {
   pinPeripheral(3, PIO_SERCOM_ALT);
   pinPeripheral(4, PIO_SERCOM_ALT);
 
-  //Asigna funcionalidad SERCOM a pines 11(MOSI), 12(MISO) y 13(SCK)
+  //Asigna funcionalidad SERCOM a pines 11(MOSI), 12(MISO) y 13(SCK)_________________________________
   pinPeripheral(11, PIO_SERCOM);
   pinPeripheral(12, PIO_SERCOM);
   pinPeripheral(13, PIO_SERCOM);
@@ -138,6 +138,8 @@ void setup() {
   //Verificar modo de emergencia al encender
   check_em_mode();
 
+  pinMode(2, INPUT);
+
   //Se colocan los pines 25 y 26 (LEDs) en modo salida
   pinMode(25, OUTPUT);
   pinMode(26, OUTPUT);
@@ -155,7 +157,7 @@ void setup() {
 void check_em_mode() {
   String line;
   File emg_file = SD.open("emg.txt");
-  
+
   if (emg_file) {
     line = emg_file.readStringUntil('\n');
   }
@@ -163,7 +165,7 @@ void check_em_mode() {
   Serial.println(line);
   char data[5];
   line.toCharArray(data, 5);
-  if(strcmp(data, EM_ON) == 0){
+  if (strcmp(data, EM_ON) == 0) {
     Serial.println("Emergencia");
     em_mode = true;
   }
@@ -188,7 +190,7 @@ void process_sms(int8_t sms_num) {
       n++;
       continue;
     }
-    
+
     //Se intenta obtener el número del remitente del mensaje
     if (! fona.getSMSSender(n, sender, sizeof(sender))) {
       //No se logra obtener (número privado)
@@ -336,7 +338,7 @@ void em_write(String msg) {
     fona.HTTP_POST_start(url, F("application/json"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&msg_len);
     fona.HTTP_POST_end();
     Serial.println(statuscode);
-    if(statuscode == 200){
+    if (statuscode == 200) {
       Serial.print("POST");
       Serial.println(msg);
     } else {
