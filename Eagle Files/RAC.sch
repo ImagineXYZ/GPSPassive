@@ -1292,20 +1292,20 @@ will be further integrated into the Sparkfun Library for other footprints.  It c
 </net>
 <net name="N$17" class="0">
 <segment>
-<pinref part="U$4" gate="G$1" pin="RX"/>
-<wire x1="-48.26" y1="48.26" x2="-30.48" y2="48.26" width="0.1524" layer="91"/>
-<wire x1="-30.48" y1="48.26" x2="-30.48" y2="60.96" width="0.1524" layer="91"/>
+<wire x1="-30.48" y1="45.72" x2="-30.48" y2="60.96" width="0.1524" layer="91"/>
 <pinref part="U$1" gate="G$1" pin="0/RX"/>
 <wire x1="-30.48" y1="60.96" x2="-7.62" y2="60.96" width="0.1524" layer="91"/>
+<pinref part="U$4" gate="G$1" pin="TX"/>
+<wire x1="-30.48" y1="45.72" x2="-48.26" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$18" class="0">
 <segment>
-<pinref part="U$4" gate="G$1" pin="TX"/>
-<wire x1="-48.26" y1="45.72" x2="-33.02" y2="45.72" width="0.1524" layer="91"/>
-<wire x1="-33.02" y1="45.72" x2="-33.02" y2="63.5" width="0.1524" layer="91"/>
 <pinref part="U$1" gate="G$1" pin="1/TX"/>
 <wire x1="-33.02" y1="63.5" x2="-7.62" y2="63.5" width="0.1524" layer="91"/>
+<wire x1="-33.02" y1="63.5" x2="-33.02" y2="48.26" width="0.1524" layer="91"/>
+<pinref part="U$4" gate="G$1" pin="RX"/>
+<wire x1="-33.02" y1="48.26" x2="-48.26" y2="48.26" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$19" class="0">
