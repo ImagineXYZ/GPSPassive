@@ -8,7 +8,7 @@ SD	  SAMD21
 DI ------ 11
 DO ------ 12
 SCK ----- 13
-CS  ----- 16
+CS  ----- A2 (16)
 
 FONA	  SAMD21
 Bat ----- Vin    ****** 
