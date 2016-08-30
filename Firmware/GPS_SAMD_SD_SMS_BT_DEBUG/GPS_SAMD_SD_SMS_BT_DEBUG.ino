@@ -140,8 +140,8 @@ void sercom_setup() {
 }
 
 void setup() {
-  while (! Serial);
 #ifdef DEBUG
+  while (! Serial);
   Serial.begin(115200);
   Serial.println("======DEBUG======");
 #endif
