@@ -31,8 +31,8 @@
 //General
 #define Serial SERIAL_PORT_USBVIRTUAL
 #define SD_CS A2
-#define DIST_TRIG 10.0
-#define TIME_TRIG 90
+#define DIST_TRIG 1000.0 //en metros
+#define TIME_TRIG 90 //en segundos
 #define DELAY 10
 #define EM_ON "EMG1"
 #define EM_OFF "EMG0"
