@@ -8,13 +8,18 @@
 
 //========================Definiciones===========================
 
+//Debug Flag
+//#define DEBUG
+
 //Bluefruit
 #define BLUEFRUIT_HWSERIAL_NAME Serial1
 #define FACTORYRESET_ENABLE 1
-#define BUFSIZE 128   // Size of the read buffer for incoming data
+#define BUFSIZE 256   // Size of the read buffer for incoming data
 #define VERBOSE_MODE false
 #define BLUEFRUIT_UART_MODE_PIN -1
 #define BT_RTR "BT_RTR"
+//Modo CMD para BLE
+//Consulta de saldo Kolbi llamando al *888#
 
 //FONA
 #define FONA_RI A1
@@ -87,7 +92,9 @@ void fona_setup() {
   //Se habilita el GPS
   fona.enableGPS(true);
   fona.setGPRSNetworkSettings(F("kolbi3g"), F(""), F(""));
+#ifdef DEBUG
   Serial.println("FONA listo");
+#endif
 }
 
 //Configuración de BT
@@ -97,7 +104,9 @@ void bt_setup() {
     while (1);
   }
   ble.echo(false);
+#ifdef DEBUG
   Serial.println("BT listo");
+#endif
 }
 
 //Configuración de SD
@@ -106,7 +115,9 @@ void sd_setup() {
   while (!SD.begin(SD_CS)) {
     delay(100);
   }
+#ifdef DEBUG
   Serial.println("SD lista");
+#endif
 }
 
 //Configuración de puertos SERCOM (UART, SPI)
@@ -123,13 +134,17 @@ void sercom_setup() {
   pinPeripheral(11, PIO_SERCOM);
   pinPeripheral(12, PIO_SERCOM);
   pinPeripheral(13, PIO_SERCOM);
+#ifdef DEBUG
   Serial.println("SERCOM listo");
+#endif
 }
 
 void setup() {
   while (! Serial);
+#ifdef DEBUG
   Serial.begin(115200);
   Serial.println("======DEBUG======");
+#endif
   sercom_setup();
   fona_setup();
   sd_setup();
@@ -148,7 +163,9 @@ void setup() {
   digitalWrite(25, HIGH);
   delay(5000);
   digitalWrite(25, LOW);
+#ifdef DEBUG
   Serial.println("=========Setup listo=========");
+#endif
 }
 
 //=========================Funciones==============================
@@ -161,12 +178,16 @@ void check_em_mode() {
   if (emg_file) {
     line = emg_file.readStringUntil('\n');
   }
+#ifdef DEBUG
   Serial.print("Estado EMG: ");
   Serial.println(line);
+#endif
   char data[5];
   line.toCharArray(data, 5);
   if (strcmp(data, EM_ON) == 0) {
+#ifdef DEBUG
     Serial.println("Emergencia");
+#endif
     em_mode = true;
   }
 }
@@ -198,8 +219,10 @@ void process_sms(int8_t sms_num) {
     }
     //Si el contenido del SMS es el código de emergencia
     if (strcasecmp(replybuffer, EM_ON) == 0) {
+#ifdef DEBUG
       Serial.println("Modo emergencia encendido");
-      //fona.sendSMS(sender, "Modo emergencia encendido"); //Intentar confirmar al remitente
+#endif
+      fona.sendSMS(sender, "Modo emergencia encendido"); //Intentar confirmar al remitente
       delay(100);
       em_mode = 1; //Se activa el modo de emergencia
       SD.remove("emg.txt");
@@ -208,8 +231,10 @@ void process_sms(int8_t sms_num) {
 
     //Si el contenido del SMS es el código de cancelación de emergencia
     if (strcasecmp(replybuffer, EM_OFF) == 0) {
+#ifdef DEBUG
       Serial.println("Modo emergencia apagado");
-      //fona.sendSMS(sender, "Modo emergencia apagado"); //Intentar confirmar al remitente
+#endif
+      fona.sendSMS(sender, "Modo emergencia apagado"); //Intentar confirmar al remitente
       delay(100);
       em_mode = 0; //Se desactiva el modo de emergencia
       SD.remove("emg.txt");
@@ -223,7 +248,9 @@ void process_sms(int8_t sms_num) {
 
 //Se obtiene una cadena con fecha, latitud, longitud, velocidad, orientación y altitud del dispositivo
 String get_gps() {
+#ifdef DEBUG
   Serial.println("Calculando Ubicacion...");
+#endif
   float speed_kph, heading, altitude;
   double date;
   boolean gps_success = fona.getGPS(&date, &curr_lat, &curr_lon, &speed_kph, &heading, &altitude);
@@ -234,7 +261,9 @@ String get_gps() {
     //Serial.println(msg);
     return msg;
   } else {
+#ifdef DEBUG
     Serial.println("Error GPS");
+#endif
     return "ERROR";
   }
 }
@@ -245,7 +274,9 @@ boolean write_file(String file, String msg) {
   file_out = SD.open(file, FILE_WRITE);
   //Escribir solo si el archivo se abrió adecuadamente
   if (file_out) {
+#ifdef DEBUG
     Serial.println("Escribiendo en SD");
+#endif
     file_out.println(msg);
     file_out.close(); //Se cierra el archivo
     digitalWrite(26, HIGH);
@@ -253,7 +284,9 @@ boolean write_file(String file, String msg) {
     digitalWrite(26, LOW);
     return true;
   } else {
+#ifdef DEBUG
     Serial.println("Error SD");
+#endif
     return false;
   }
 }
@@ -262,14 +295,17 @@ boolean write_file(String file, String msg) {
 //Obtenido y modificado de http://forum.arduino.cc/index.php?topic=27541.0
 float calc_dist(float lat1, float lon1, float lat2, float lon2)
 {
-  /* Serial.print("Latitud 1: ");
+  /*
+    #ifdef DEBUG
+    Serial.print("Latitud 1: ");
     Serial.println(lat1);
     Serial.print("Longitud 1: ");
     Serial.println(lon1);
     Serial.print("Latitud 2: ");
     Serial.println(lat2);
     Serial.print("Longitud 2: ");
-    Serial.println(lon2);*/
+    Serial.println(lon2);
+    #endif*/
   //Diferencias entre coordenadas en radianes
   float dif_lat = radians(lat2 - lat1);
   float dif_lon = radians(lon2 - lon1);
@@ -289,8 +325,10 @@ float calc_dist(float lat1, float lon1, float lat2, float lon2)
 
   //Se multiplica por el radio de la Tierra
   dist_calc *= 6371000.0;
+#ifdef DEBUG
   Serial.print("Distancia: ");
   Serial.println(dist_calc);
+#endif
   return dist_calc;
 }
 
@@ -302,8 +340,10 @@ bool assert_write(String str) {
     float distance = calc_dist(curr_lat, curr_lon, last_lat, last_lon);
     //Cálculo del tiempo transcurrido desde la última escritura
     int elapsed = (int)((t1 - t2) / 1000);
+#ifdef DEBUG
     Serial.print("Tiempo transcurrido: ");
     Serial.println(elapsed);
+#endif
     if (distance > DIST_TRIG || elapsed > TIME_TRIG) {
       last_lat = curr_lat;
       last_lon = curr_lon;
@@ -337,32 +377,42 @@ void em_write(String msg) {
     delay(1000);
     fona.HTTP_POST_start(url, F("application/json"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&msg_len);
     fona.HTTP_POST_end();
+#ifdef DEBUG
     Serial.println(statuscode);
+#endif
     if (statuscode == 200) {
+#ifdef DEBUG
       Serial.print("POST");
       Serial.println(msg);
+#endif
     } else {
+#ifdef DEBUG
       Serial.println("Error de conexion");
+#endif
     }
   }
 }
 
 //Enviar los contenidos del archivo de registro a través de BT
 void send_log_contents() {
+  String line;
   ble.println("AT+BLEUARTRX");
   ble.readline();
   if (strcmp(ble.buffer, BT_RTR) == 0) {
     File log_file = SD.open("log.txt");
     if (log_file) {
       while (log_file.available()) {
-        String line = log_file.readStringUntil('\n');
+        line = log_file.readStringUntil('\n');
         ble.print("AT+BLEUARTTX=");
         ble.println(line); // Leer una línea en lugar de un caracter
         ble.waitForOK();
+        delay(200);
       }
       log_file.close();
       //SD.remove(log_file.txt);
+#ifdef DEBUG
       Serial.println("Fin transmisión BT");
+#endif
     }
   }
 }
@@ -371,10 +421,15 @@ void send_log_contents() {
 void loop() {
   int8_t sms_num = fona.getNumSMS();
   if (sms_num > 0) {
+#ifdef DEBUG
     Serial.println("INT_SMS");
+#endif
     process_sms(sms_num);
-  } else if (ble.isConnected()) {
+  }
+  if (ble.isConnected()) {
+#ifdef DEBUG
     Serial.println("BT conectado");
+#endif
     send_log_contents();
   }
   t1 = millis();

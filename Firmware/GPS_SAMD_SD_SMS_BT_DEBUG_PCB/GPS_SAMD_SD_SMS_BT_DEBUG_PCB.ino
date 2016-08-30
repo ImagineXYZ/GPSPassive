@@ -11,11 +11,12 @@
 //Bluefruit
 #define BLUEFRUIT_HWSERIAL_NAME Serial1
 #define FACTORYRESET_ENABLE 1
-#define BUFSIZE 128   // Size of the read buffer for incoming data
+#define BUFSIZE 256   // Size of the read buffer for incoming data
 #define VERBOSE_MODE false
 #define BLUEFRUIT_UART_MODE_PIN -1
 #define BT_RTR "BT_RTR"
 //Modo CMD para BLE
+//Consulta de saldo Kolbi llamando al *888#
 
 
 //FONA
@@ -73,7 +74,7 @@ void fona_setup() {
   pinMode(FONA_PS, INPUT);
   pinMode(FONA_NS, INPUT);
   digitalWrite(FONA_KEY, HIGH); //Se coloca el pin 15 en bajo para habilitar FONA (Key)
-  while(!digitalRead(FONA_PS)){
+  while (!digitalRead(FONA_PS)) {
     digitalWrite(FONA_KEY, LOW);
     delay(2000);
     digitalWrite(FONA_KEY, HIGH);
@@ -157,7 +158,7 @@ void setup() {
 void check_em_mode() {
   String line;
   File emg_file = SD.open("emg.txt");
-  
+
   if (emg_file) {
     line = emg_file.readStringUntil('\n');
   }
@@ -165,7 +166,7 @@ void check_em_mode() {
   Serial.println(line);
   char data[5];
   line.toCharArray(data, 5);
-  if(strcmp(data, EM_ON) == 0){
+  if (strcmp(data, EM_ON) == 0) {
     Serial.println("Emergencia");
     em_mode = true;
   }
@@ -190,7 +191,7 @@ void process_sms(int8_t sms_num) {
       n++;
       continue;
     }
-    
+
     //Se intenta obtener el número del remitente del mensaje
     if (! fona.getSMSSender(n, sender, sizeof(sender))) {
       //No se logra obtener (número privado)
@@ -199,7 +200,7 @@ void process_sms(int8_t sms_num) {
     //Si el contenido del SMS es el código de emergencia
     if (strcasecmp(replybuffer, EM_ON) == 0) {
       Serial.println("Modo emergencia encendido");
-      //fona.sendSMS(sender, "Modo emergencia encendido"); //Intentar confirmar al remitente
+      fona.sendSMS(sender, "Modo emergencia encendido"); //Intentar confirmar al remitente
       delay(100);
       em_mode = 1; //Se activa el modo de emergencia
       SD.remove("emg.txt");
@@ -209,7 +210,7 @@ void process_sms(int8_t sms_num) {
     //Si el contenido del SMS es el código de cancelación de emergencia
     if (strcasecmp(replybuffer, EM_OFF) == 0) {
       Serial.println("Modo emergencia apagado");
-      //fona.sendSMS(sender, "Modo emergencia apagado"); //Intentar confirmar al remitente
+      fona.sendSMS(sender, "Modo emergencia apagado"); //Intentar confirmar al remitente
       delay(100);
       em_mode = 0; //Se desactiva el modo de emergencia
       SD.remove("emg.txt");
@@ -338,7 +339,7 @@ void em_write(String msg) {
     fona.HTTP_POST_start(url, F("application/json"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&msg_len);
     fona.HTTP_POST_end();
     Serial.println(statuscode);
-    if(statuscode == 200){
+    if (statuscode == 200) {
       Serial.print("POST");
       Serial.println(msg);
     } else {
@@ -349,16 +350,18 @@ void em_write(String msg) {
 
 //Enviar los contenidos del archivo de registro a través de BT
 void send_log_contents() {
+  String line;
   ble.println("AT+BLEUARTRX");
   ble.readline();
   if (strcmp(ble.buffer, BT_RTR) == 0) {
     File log_file = SD.open("log.txt");
     if (log_file) {
       while (log_file.available()) {
-        String line = log_file.readStringUntil('\n');
+        line = log_file.readStringUntil('\n');
         ble.print("AT+BLEUARTTX=");
         ble.println(line); // Leer una línea en lugar de un caracter
         ble.waitForOK();
+        delay(200);
       }
       log_file.close();
       //SD.remove(log_file.txt);
@@ -373,7 +376,8 @@ void loop() {
   if (sms_num > 0) {
     Serial.println("INT_SMS");
     process_sms(sms_num);
-  } else if (ble.isConnected()) {
+  }
+  if (ble.isConnected()) {
     Serial.println("BT conectado");
     send_log_contents();
   }
