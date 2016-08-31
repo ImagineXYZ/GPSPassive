@@ -69,10 +69,10 @@ Adafruit_BluefruitLE_UART ble(bluefruitSS, BLUEFRUIT_UART_MODE_PIN,
 */
 
 /* ...or hardware serial, which does not need the RTS/CTS pins. Uncomment this line */
-// Adafruit_BluefruitLE_UART ble(Serial1, BLUEFRUIT_UART_MODE_PIN);
+Adafruit_BluefruitLE_UART ble(Serial1, BLUEFRUIT_UART_MODE_PIN);
 
 /* ...hardware SPI, using SCK/MOSI/MISO hardware SPI pins and then user selected CS/IRQ/RST */
-Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
+//Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_RST);
 
 /* ...software SPI, using SCK/MOSI/MISO user-defined SPI pins and then user selected CS/IRQ/RST */
 //Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_SCK, BLUEFRUIT_SPI_MISO,
@@ -82,7 +82,7 @@ Adafruit_BluefruitLE_SPI ble(BLUEFRUIT_SPI_CS, BLUEFRUIT_SPI_IRQ, BLUEFRUIT_SPI_
 
 // A small helper
 void error(const __FlashStringHelper*err) {
-  Serial.println(err);
+  SerialUSB.println(err);
   while (1);
 }
 
@@ -94,26 +94,26 @@ void error(const __FlashStringHelper*err) {
 /**************************************************************************/
 void setup(void)
 {
-  while (!Serial);  // required for Flora & Micro
+  while (!SerialUSB);  // required for Flora & Micro
   delay(500);
 
-  Serial.begin(115200);
-  Serial.println(F("Adafruit Bluefruit Command Mode Example"));
-  Serial.println(F("---------------------------------------"));
+  SerialUSB.begin(115200);
+  SerialUSB.println(F("Adafruit Bluefruit Command Mode Example"));
+  SerialUSB.println(F("---------------------------------------"));
 
   /* Initialise the module */
-  Serial.print(F("Initialising the Bluefruit LE module: "));
+  SerialUSB.print(F("Initialising the Bluefruit LE module: "));
 
   if ( !ble.begin(VERBOSE_MODE) )
   {
     error(F("Couldn't find Bluefruit, make sure it's in CoMmanD mode & check wiring?"));
   }
-  Serial.println( F("OK!") );
+  SerialUSB.println( F("OK!") );
 
   if ( FACTORYRESET_ENABLE )
   {
     /* Perform a factory reset to make sure everything is in a known state */
-    Serial.println(F("Performing a factory reset: "));
+    SerialUSB.println(F("Performing a factory reset: "));
     if ( ! ble.factoryReset() ){
       error(F("Couldn't factory reset"));
     }
@@ -122,13 +122,13 @@ void setup(void)
   /* Disable command echo from Bluefruit */
   ble.echo(false);
 
-  Serial.println("Requesting Bluefruit info:");
+  SerialUSB.println("Requesting Bluefruit info:");
   /* Print Bluefruit information */
   ble.info();
 
-  Serial.println(F("Please use Adafruit Bluefruit LE app to connect in UART mode"));
-  Serial.println(F("Then Enter characters to send to Bluefruit"));
-  Serial.println();
+  SerialUSB.println(F("Please use Adafruit Bluefruit LE app to connect in UART mode"));
+  SerialUSB.println(F("Then Enter characters to send to Bluefruit"));
+  SerialUSB.println();
 
   ble.verbose(false);  // debug info is a little annoying after this point!
 
@@ -141,10 +141,10 @@ void setup(void)
   if ( ble.isVersionAtLeast(MINIMUM_FIRMWARE_VERSION) )
   {
     // Change Mode LED Activity
-    Serial.println(F("******************************"));
-    Serial.println(F("Change LED activity to " MODE_LED_BEHAVIOUR));
+    SerialUSB.println(F("******************************"));
+    SerialUSB.println(F("Change LED activity to " MODE_LED_BEHAVIOUR));
     ble.sendCommandCheckOK("AT+HWModeLED=" MODE_LED_BEHAVIOUR);
-    Serial.println(F("******************************"));
+    SerialUSB.println(F("******************************"));
   }
 }
 
@@ -161,15 +161,15 @@ void loop(void)
   if ( getUserInput(inputs, BUFSIZE) )
   {
     // Send characters to Bluefruit
-    Serial.print("[Send] ");
-    Serial.println(inputs);
+    SerialUSB.print("[Send] ");
+    SerialUSB.println(inputs);
 
     ble.print("AT+BLEUARTTX=");
     ble.println(inputs);
 
     // check response stastus
     if (! ble.waitForOK() ) {
-      Serial.println(F("Failed to send?"));
+      SerialUSB.println(F("Failed to send?"));
     }
   }
 
@@ -181,7 +181,7 @@ void loop(void)
     return;
   }
   // Some data was found, its in the buffer
-  Serial.print(F("[Recv] ")); Serial.println(ble.buffer);
+  SerialUSB.print(F("[Recv] ")); SerialUSB.println(ble.buffer);
   ble.waitForOK();
 }
 
@@ -196,7 +196,7 @@ bool getUserInput(char buffer[], uint8_t maxSize)
   TimeoutTimer timeout(100);
 
   memset(buffer, 0, maxSize);
-  while( (!Serial.available()) && !timeout.expired() ) { delay(1); }
+  while( (!SerialUSB.available()) && !timeout.expired() ) { delay(1); }
 
   if ( timeout.expired() ) return false;
 
@@ -204,9 +204,9 @@ bool getUserInput(char buffer[], uint8_t maxSize)
   uint8_t count=0;
   do
   {
-    count += Serial.readBytes(buffer+count, maxSize);
+    count += SerialUSB.readBytes(buffer+count, maxSize);
     delay(2);
-  } while( (count < maxSize) && (Serial.available()) );
+  } while( (count < maxSize) && (SerialUSB.available()) );
 
   return true;
 }
