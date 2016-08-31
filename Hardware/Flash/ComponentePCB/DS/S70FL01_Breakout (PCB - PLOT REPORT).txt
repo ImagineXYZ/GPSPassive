@@ -2,12 +2,13 @@ PLOT REPORT
 -----------
 
 Report File:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout (PCB - PLOT REPORT).txt
-Report Written:     Thursday, August 18, 2016
+Report Written:     Wednesday, August 24, 2016
+Project Path:       C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01GSAGMFI011_Breakout.prj
 Design Path:        C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.pcb
 Design Title:       
 Created:            16/08/2016 11:09:58 a.m.
-Last Saved:         16/08/2016 11:44:39 a.m.
-Editing Time:       65 min
+Last Saved:         18/08/2016 02:03:26 p.m.
+Editing Time:       46 min
 Units:              mm (precision 3)
 
 
@@ -15,16 +16,11 @@ Device Settings
 ===============
 
 
-Gerber Settings
-===============
+Drill Settings
+==============
 
-    Leading zero suppression.
-    G01 assumed throughout.
-    Line termination <*> <CR> <LF>.
-    3.5 format absolute inches.
-    Format commands defined in Gerber file.
-    Aperture table defined in Gerber file.
-
+    Excellon Format 1    Format 3.5 absolute in mm.
+    No zero suppression.
 
 
 Plots Output
@@ -33,24 +29,38 @@ Plots Output
     Plot Job: "C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout.mop"
 
 
-Gerber Output
-=============
+NC Drill Output
+===============
 
-C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout - Top Copper.gbr
+C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout - Drill Data - [Through Hole].drl
 
-    Layers:
-    ------------------
-    Top Copper
-    Board Outlines
+    Output:
+    ---------------------------
+    Plated Round Drill Holes
+    Plated Slots
+    Plated Board Outlines
 
-    D-Code Shape  (thou)
-    ----------------------------------------------
-    D10    Round 25.00
-    D11    Round 5.00
-    D12    Round 5.91
-    D13    Rectangle 21.65 X 57.87  Rotation 90
-    D14    Square 78.74  Hole 23.62
-    D15    Round 78.74  Hole 23.62
-    D16    Round 15.00
+    Tool  Size         Count   ID
+    ------------------------------------
+    T001  000.02362 in 16    F
+    ------------------------------------
+    Total              16
+    ------------------------------------
+
+C:\Users\Bryan\Documents\Trabajo\ImagineXYZ\HarwareDevelopment\Git\GPSPassive\Hardware\Flash\ComponentePCB\DS\S70FL01_Breakout - Drill Data - [Through Hole] (Unplated).drl
+
+    Output:
+    -----------------------------
+    Unplated Round Drill Holes
+    Unplated Slots
+    Unplated Board Outlines
+
+    Tool  Size         Count   ID
+    ------------------------------------
+    T001  000.02500 in 1
+    ------------------------------------
+    Total              1
+    ------------------------------------
+
 
 End Of Report.
