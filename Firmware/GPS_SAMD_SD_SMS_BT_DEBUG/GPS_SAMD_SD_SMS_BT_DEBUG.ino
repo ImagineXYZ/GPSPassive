@@ -9,7 +9,8 @@
 //========================Definiciones===========================
 
 //Debug Flag
-//#define DEBUG
+#define DEBUG
+#define DEBUGxGPRS
 
 //Bluefruit
 #define BLUEFRUIT_HWSERIAL_NAME Serial1
@@ -356,39 +357,58 @@ bool assert_write(String str) {
 //Escribe en la tarjeta SD y envía al servidor su ubicación por modo de emergencia
 void em_write(String msg) {
   if (msg.indexOf("ERROR") == -1) {
-    //Variablees necesarias para POST
-    uint16_t statuscode;
-    int16_t msg_len;
-    char url[33] = "www.imaginexyz.com/rentacar/pos";
-    //char url[59] = "imaginexyz-genuinoday.herokuapp.com/imaginexyz/genuinodayb";
-    char data[90];
-    msg.toCharArray(data, 90);
 
-    write_file("emg_data.txt", msg);//Escritura en SD
+#ifdef DEBUGxGPRS
+    //Algoritmo para determinación de distancia en metros entre 2 puntos
+    //float distance = sqrt((curr_lat - last_lat) * (curr_lat - last_lat) + (curr_lon - last_lon) * (curr_lon - last_lon));
+    float distance = calc_dist(curr_lat, curr_lon, last_lat, last_lon);
+    //Cálculo del tiempo transcurrido desde la última escritura
+    int elapsed = (int)((t1 - t2) / 1000);
+#ifdef DEBUG
+    Serial.print("Tiempo transcurrido: ");
+    Serial.println(elapsed);
+#endif DEBUG
+    if (distance > DIST_TRIG || elapsed > TIME_TRIG) {
+      last_lat = curr_lat;
+      last_lon = curr_lon;
+      t2 = millis();
 
-    //POST del mensaje de ubicación al servidor
-    uint8_t i = 0;
-    bool gprs_en = fona.enableGPRS(true);
-    while (!gprs_en && i < 5 ) {
-      delay(300);
-      gprs_en = fona.enableGPRS(true);
-      i++;
-    }
-    delay(1000);
-    fona.HTTP_POST_start(url, F("application/json"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&msg_len);
-    fona.HTTP_POST_end();
+#endif DEBUGxGPRS
+
+      //Variablees necesarias para POST
+      uint16_t statuscode;
+      int16_t msg_len;
+      char url[33] = "www.imaginexyz.com/rentacar/pos";
+      //char url[59] = "imaginexyz-genuinoday.herokuapp.com/imaginexyz/genuinodayb";
+      char data[90];
+      msg.toCharArray(data, 90);
+
+      write_file("emg_data.txt", msg);//Escritura en SD
+
+      //POST del mensaje de ubicación al servidor
+      uint8_t i = 0;
+      bool gprs_en = fona.enableGPRS(true);
+      while (!gprs_en && i < 5 ) {
+        delay(300);
+        gprs_en = fona.enableGPRS(true);
+        i++;
+      }
+      delay(1000);
+      fona.HTTP_POST_start(url, F("application/json"), (uint8_t *) data, strlen(data), &statuscode, (uint16_t *)&msg_len);
+      fona.HTTP_POST_end();
 #ifdef DEBUG
-    Serial.println(statuscode);
+      Serial.println(statuscode);
 #endif
-    if (statuscode == 200) {
+      if (statuscode == 200) {
 #ifdef DEBUG
-      Serial.print("POST");
-      Serial.println(msg);
+        Serial.print("POST");
+        Serial.println(msg);
 #endif
-    } else {
+      } else {
 #ifdef DEBUG
-      Serial.println("Error de conexion");
+        Serial.println("Error de conexion");
 #endif
+      }
     }
   }
 }
