@@ -9,8 +9,8 @@
 //========================Definiciones===========================
 
 //Debug Flag
-#define DEBUG
-#define DEBUGxGPRS
+//#define DEBUG
+//#define DEBUGxGPRS
 
 //Bluefruit
 #define BLUEFRUIT_HWSERIAL_NAME Serial1
@@ -407,8 +407,8 @@ void em_write(String msg) {
       } else {
 #ifdef DEBUG
         Serial.println("Error de conexion");
-#endif
       }
+#endif
     }
   }
 }
