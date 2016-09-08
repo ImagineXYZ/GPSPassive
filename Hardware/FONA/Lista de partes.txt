@@ -1,22 +1,23 @@
-http://www.digikey.com/product-search/en?keywords=%20475-2510-1-ND	LED Rojo 0805 (1x)
-http://www.digikey.com/product-search/en?keywords=%20475-2730-1-ND	LED Verde 0805 (1x)
-http://www.digikey.com/product-search/en?keywords=1N4148WSFSCT-ND	1N4148 SOD323 (7x)
-http://www.digikey.com/product-search/en?keywords=%20401-1426-1-ND	Botón 4.6x2.8mm (2x)
+http://www.digikey.com/product-search/en?keywords=%20475-2510-1-ND	LED Rojo 0805 (1x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=%20475-2730-1-ND	LED Verde 0805 (1x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=1N4148WSFSCT-ND	1N4148 SOD323 (7x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=%20401-1426-1-ND	Botón 4.6x2.8mm (2x) -> Actualizado en el BOM
 http://www.digikey.com/product-search/en?keywords=H122041-ND		Conector uFL (2x)
-http://www.digikey.com/product-search/en?keywords=%20SMF05CT1GOSCT-ND	Arreglo TVS (1x)
+http://www.digikey.com/product-search/en?keywords=%20SMF05CT1GOSCT-ND	Arreglo TVS (1x) -> Actualizado en el BOM
 
 http://www.digikey.com/product-search/en?keywords=361-1020-1-ND		SIM Holder (1x)
 http://www.digikey.com/product-detail/en/amphenol-commercial-products/101-00271-82/101-00271-82-1-ND/2187106 Otra opción push push
 
-http://www.digikey.com/product-search/en?keywords=399-4697-1-ND		Condensador 100uF 1210 (1x)
-http://www.digikey.com/product-search/en?keywords=1276-1105-1-ND%20	Condensador 33pF 0805 (1x)
-http://www.digikey.com/product-search/en?keywords=709-1168-1-ND		Condensador 10pF 0805 (1x)
-http://www.digikey.com/product-search/en?keywords=1276-1244-1-ND	Condensador 4.6uF 0805 (1x)
-http://www.digikey.com/product-search/en?keywords=1276-1007-1-ND	Condensador 0.1uF 0805 (1x)
-http://www.digikey.com/product-search/en?keywords=P1.0KADCT-ND		Resistencia 1k 0805 (2x)
-http://www.digikey.com/product-search/en?keywords=P10KADCT-ND		Resistencia 10k 0805 (3x)
-http://www.digikey.com/product-search/en?keywords=P100ADCT-ND		Resistencia 100 0805 (1x)
-http://www.digikey.com/product-search/en?keywords=MMSZ5231BT1GOSCT-ND	Diodo Zener 5.1V 500mW 0805
+http://www.digikey.com/product-search/en?keywords=399-4697-1-ND		Condensador 100uF 1210 (1x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=1276-1105-1-ND%20	Condensador 33pF 0805 (1x)-> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=709-1168-1-ND		Condensador 10pF 0805 (1x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=1276-1244-1-ND	Condensador 4.6uF 0805 (1x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=1276-1007-1-ND	Condensador 0.1uF 0805 (1x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=P1.0KADCT-ND		Resistencia 1k 0805 (2x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=P10KADCT-ND		Resistencia 10k 0805 (3x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=P100ADCT-ND		Resistencia 100 0805 (1x) -> Actualizado en el BOM
+http://www.digikey.com/product-search/en?keywords=MMSZ5231BT1GOSCT-ND	Diodo Zener 5.1V 500mW 0805 -> Actualizado en el BOM
+
 SIM808
 https://www.alibaba.com/product-detail/simcom-SIM808-cheaper-than-SIM908-GSM_1981785242.html?spm=a2700.7724838.0.0.m9Usyn SIMCOM 808	
 https://www.adafruit.com/product/2637

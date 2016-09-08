@@ -1,1 +1,3 @@
-SD Holder http://www.digikey.com/product-detail/en/molex-llc/5033980891/WM6377CT-ND/2804771
+SD Holder http://www.digikey.com/product-detail/en/molex-llc/5033980891/WM6377CT-ND/2804771 -> Actualizado en el BOM
+
+http://www.digikey.com/product-detail/en/molex-llc/1051620001/WM14405CT-ND/6133135 -> Actualzaido en el BOM
