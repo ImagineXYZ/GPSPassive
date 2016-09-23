@@ -14,7 +14,8 @@
 #define BUFSIZE 256   // Size of the read buffer for incoming data
 #define VERBOSE_MODE false
 #define BLUEFRUIT_UART_MODE_PIN -1
-#define BT_RTR "BT_RTR"
+#define BT_RTR "RTR"
+#define BT_INIT "INIT"
 //Modo CMD para BLE
 //Consulta de saldo Kolbi llamando al *888#
 
@@ -216,7 +217,7 @@ void process_sms(int8_t sms_num) {
       SD.remove("emg.txt");
       write_file("emg.txt", EM_OFF);
     }
-    delay(3000);
+    delay(200);
     fona.deleteSMS(n); //Se borra todo mensaje leído
     break;
   }
@@ -351,21 +352,44 @@ void em_write(String msg) {
 //Enviar los contenidos del archivo de registro a través de BT
 void send_log_contents() {
   String line;
-  ble.println("AT+BLEUARTRX");
-  ble.readline();
-  if (strcmp(ble.buffer, BT_RTR) == 0) {
-    File log_file = SD.open("log.txt");
-    if (log_file) {
-      while (log_file.available()) {
+  File log_file = SD.open("log.txt");
+  if(!log_file){
+    Serial.println("File not found");
+    return;
+  }
+  unsigned long file_size = log_file.size();
+  while(true){
+    ble.println("AT+BLEUARTRX");
+    ble.readline();
+    if (strcmp(ble.buffer, BT_INIT) == 0) {
+      ble.print("AT+BLEUARTTX=FS-");
+      ble.println(file_size);
+      Serial.println("MSG init");
+    } else if (strcmp(ble.buffer, BT_RTR) == 0) {
+      long sent = 0;
+      uint8_t i = 0;
+      while (log_file.available() && i < 20) {
         line = log_file.readStringUntil('\n');
+        //line.concat('\n');
         ble.print("AT+BLEUARTTX=");
+        sent += line.length();
         ble.println(line); // Leer una línea en lugar de un caracter
         ble.waitForOK();
         delay(200);
+        //ble.flush();
+        i++;
       }
-      log_file.close();
-      //SD.remove(log_file.txt);
-      Serial.println("Fin transmisión BT");
+      if(i == 0){
+        ble.println("AT+BLEUARTTX=EOF");
+        Serial.println("BT EOF");
+        return;
+      }
+      ble.print("AT+BLEUARTTX=MSG-");
+      ble.print(i);
+      ble.print(", SENT-");
+      ble.println(sent);
+      Serial.print("Sent ");
+      Serial.println(sent);
     }
   }
 }
@@ -374,7 +398,7 @@ void send_log_contents() {
 void loop() {
   int8_t sms_num = fona.getNumSMS();
   if (sms_num > 0) {
-    Serial.println("INT_SMS");
+    //Serial.println("INT_SMS");
     process_sms(sms_num);
   }
   if (ble.isConnected()) {
