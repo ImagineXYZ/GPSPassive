@@ -16,6 +16,10 @@
 #define BLUEFRUIT_UART_MODE_PIN -1
 #define BT_RTR "RTR"
 #define BT_INIT "INIT"
+#define BT_DEL "DEL"
+#define BT_RPT "RPT"
+#define BT_CLS "CLS"
+#define PACK_SIZE 20
 //Modo CMD para BLE
 //Consulta de saldo Kolbi llamando al *888#
 
@@ -65,6 +69,9 @@ Adafruit_BluefruitLE_UART ble(BLUEFRUIT_HWSERIAL_NAME, BLUEFRUIT_UART_MODE_PIN);
 
 //Variables de control de modo de emergencia
 bool em_mode = false;
+
+//Variables SD
+int lines = 0;
 
 //===========================Setup================================
 //Considerar estado inicial de modo de emergencia
@@ -151,6 +158,14 @@ void setup() {
   delay(5000);
   digitalWrite(25, LOW);
   Serial.println("=========Setup listo=========");
+
+  String line;
+  File lines_file = SD.open("lines.txt");
+  if (lines_file) {
+    line = lines_file.readStringUntil('\n');
+  }
+  lines = line.toInt();
+
 }
 
 //=========================Funciones==============================
@@ -250,9 +265,6 @@ boolean write_file(String file, String msg) {
     Serial.println("Escribiendo en SD");
     file_out.println(msg);
     file_out.close(); //Se cierra el archivo
-    digitalWrite(26, HIGH);
-    delay(500);
-    digitalWrite(26, LOW);
     return true;
   } else {
     Serial.println("Error SD");
@@ -297,7 +309,7 @@ float calc_dist(float lat1, float lon1, float lat2, float lon2)
 }
 
 //Dado un mensaje con los datos del GPS (get_gps), se verifica si se debe escribir en la SD o no
-bool assert_write(String str) {
+void assert_write(String str) {
   if (str.indexOf("ERROR") == -1) {
     //Algoritmo para determinación de distancia en metros entre 2 puntos
     //float distance = sqrt((curr_lat - last_lat) * (curr_lat - last_lat) + (curr_lon - last_lon) * (curr_lon - last_lon));
@@ -310,7 +322,11 @@ bool assert_write(String str) {
       last_lat = curr_lat;
       last_lon = curr_lon;
       t2 = millis();
-      return write_file("log.txt", str);
+      if (write_file("log.txt", str)) {
+        lines++;
+        SD.remove("lines.txt");
+        write_file("lines.txt", String(lines));
+      }
     }
   }
 }
@@ -349,47 +365,94 @@ void em_write(String msg) {
   }
 }
 
-//Enviar los contenidos del archivo de registro a través de BT
+/*
+  Enviar los contenidos del archivo de registro a través de BT
+  Sin argumentos
+  Para probar, conectar con el dispositivo a través de Buefruit LE en modo UART
+  y luego enviar el código INIT. Debería recibirse un encabezado con la cantidad
+  de datos que serán enviados. Luego de esto, enviar RTR y se debería recibir el primer paquete.
+  Continuar hasta recibir EOF. Para re enviar un paquete, RPT y RTR. Para borrar el archivo, DEL.
+  Para cerrar la conexión, CLS.
+
+*/
 void send_log_contents() {
   String line;
   File log_file = SD.open("log.txt");
-  if(!log_file){
+  if (!log_file) 
+  {
     Serial.println("File not found");
     return;
   }
   unsigned long file_size = log_file.size();
-  while(true){
+  unsigned long pos_a = 0;
+  while (true) 
+  {
+    //Leer una línea del módulo BT
     ble.println("AT+BLEUARTRX");
     ble.readline();
-    if (strcmp(ble.buffer, BT_INIT) == 0) {
-      ble.print("AT+BLEUARTTX=FS-");
-      ble.println(file_size);
-      Serial.println("MSG init");
-    } else if (strcmp(ble.buffer, BT_RTR) == 0) {
+
+    //Distintos casos para el mensaje leído
+    //Enviar header, cantidad de líneas (JSON) del archiv)
+    if (strcmp(ble.buffer, BT_INIT) == 0)
+    {
+      ble.print("AT+BLEUARTTX=LNS-");
+      ble.println(lines);
+      ble.waitForOK();
+    }
+    //Repetir paquete anterior
+    else if (strcmp(ble.buffer, BT_RPT) == 0)
+    {
+      bool relocated = log_file.seek(pos_a);
+      ble.println("AT+BLEUARTTX=OK");
+      ble.waitForOK();
+    }
+    //Eliminar el archivo de log
+    else if (strcmp(ble.buffer, BT_DEL) == 0) 
+    {
+      log_file.close();
+      SD.remove("log.txt");
+      ble.println("AT+BLEUARTTX=OK");
+      ble.waitForOK();
+      break;
+    } 
+    //Cerrar conexión
+    else if (strcmp(ble.buffer, BT_CLS) == 0) 
+    {
+      log_file.close();
+      ble.println("AT+BLEUARTTX=OK");
+      ble.waitForOK();
+      break;
+    } 
+    //Enviar un paquete de líneas (JSON) con PACK_SIZE líneas
+    else if (strcmp(ble.buffer, BT_RTR) == 0) 
+    {
       long sent = 0;
       uint8_t i = 0;
-      while (log_file.available() && i < 20) {
+      //Se guarda la posición del puntero antes de enviar las PACK_SIZE líneas
+      pos_a = log_file.position(); 
+      
+      //Se envía una línea por iteración
+      while (log_file.available() && i < PACK_SIZE) 
+      {
+        // Leer una línea en lugar de un caracter
         line = log_file.readStringUntil('\n');
-        //line.concat('\n');
         ble.print("AT+BLEUARTTX=");
         sent += line.length();
-        ble.println(line); // Leer una línea en lugar de un caracter
+        ble.println(line); 
         ble.waitForOK();
-        delay(200);
-        //ble.flush();
+        delay(50);
         i++;
       }
-      if(i == 0){
+      //Cuando no quedan líneas en el archivo, se llega a EOF
+      if (i == 0) 
+      {
         ble.println("AT+BLEUARTTX=EOF");
-        Serial.println("BT EOF");
-        return;
+        break;
       }
       ble.print("AT+BLEUARTTX=MSG-");
       ble.print(i);
       ble.print(", SENT-");
       ble.println(sent);
-      Serial.print("Sent ");
-      Serial.println(sent);
     }
   }
 }
