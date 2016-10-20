@@ -138,8 +138,10 @@ void sercom_setup() {
 }
 
 void setup() {
-  while (! Serial);
+  
   Serial.begin(115200);
+  while (! Serial);
+  
   Serial.println("======DEBUG======");
   sercom_setup();
   fona_setup();
