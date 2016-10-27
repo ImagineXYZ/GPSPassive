@@ -60,6 +60,9 @@ float curr_lat, curr_lon;
 long t1;
 long t2 = 0;
 
+//Variables de soporte para geofencing
+unsigned int hash_offset = 0;
+
 //Se asigna Serial2 como puerto de comunicación para FONA y se inicializa
 HardwareSerial *fonaSerial = &Serial2;
 Adafruit_FONA fona = Adafruit_FONA(FONA_RST);
@@ -340,7 +343,6 @@ void em_write(String msg) {
     uint16_t statuscode;
     int16_t msg_len;
     char url[33] = "www.imaginexyz.com/rentacar/pos";
-    //char url[59] = "imaginexyz-genuinoday.herokuapp.com/imaginexyz/genuinodayb";
     char data[90];
     msg.toCharArray(data, 90);
 
@@ -365,6 +367,32 @@ void em_write(String msg) {
       Serial.println("Error de conexion");
     }
   }
+}
+
+unsigned int get_hash(int lat, int lon){
+  unsigned int x_reg = (lon == 180) ? 0 : floor(-2*lon +359);
+  unsigned int y_reg = (lon == 180) ? 0 : floor(2*lat +179);
+  unsigned int region = x_reg + y_reg * 719 + 1;
+  unsigned int hash_func = region + hash_offset;
+  return hash_func;
+}
+
+String get_table_entry(){
+  String line;
+  File index_file = SD.open("index.txt");
+  index_file.seek(hash_func*15);
+  
+  if (index_file) {
+    line = index_file.readStringUntil('\n');
+  }
+  unsigned long table_index = line.substring(0, 9).toInt();
+  uint16_t entry_len = line.substring(13, 15).toInt();
+  
+  index_file.close();
+
+  File table_file = SD.open("table.txt");
+  table_file.seek(table_index*35);
+  
 }
 
 /*
@@ -451,7 +479,7 @@ void send_log_contents() {
         ble.println("AT+BLEUARTTX=EOF");
         break;
       }
-      ble.print("AT+BLEUARTTX=MSG-");
+      ble.print("AT+BLEUARTTX=");
       ble.print(i);
       ble.print(", SENT-");
       ble.println(sent);
