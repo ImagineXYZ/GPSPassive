@@ -39,6 +39,7 @@
 #define DELAY 10
 #define EM_ON "EMG1"
 #define EM_OFF "EMG0"
+#define ZONE_BUF_SIZE 32
 
 //Se instancian los puertos SPI y UART a partir de los SERCOM del SAMD21
 //Ver https://learn.adafruit.com/using-atsamd21-sercom-to-add-more-spi-i2c-serial-ports
@@ -61,7 +62,15 @@ long t1;
 long t2 = 0;
 
 //Variables de soporte para geofencing
-unsigned int hash_offset = 0;
+struct zone
+{
+    float lat;
+    float lon;
+    float radius;
+};
+
+unsigned int hash_offset = 0; //Coordenadas de la esquina inferior derecha que se desea monitorear
+struct zone_buf[ZONE_BUF_SIZE];
 
 //Se asigna Serial2 como puerto de comunicación para FONA y se inicializa
 HardwareSerial *fonaSerial = &Serial2;
@@ -134,7 +143,7 @@ void sercom_setup() {
   pinPeripheral(4, PIO_SERCOM_ALT);
 
   //Asigna funcionalidad SERCOM a pines 11(MOSI), 12(MISO) y 13(SCK)
-  pinPeripheral(11, PIO_SERCOM);
+  pinPeripheral(11, PIO_SERCOM);e
   pinPeripheral(12, PIO_SERCOM);
   pinPeripheral(13, PIO_SERCOM);
   Serial.println("SERCOM listo");
@@ -369,16 +378,18 @@ void em_write(String msg) {
   }
 }
 
-unsigned int get_hash(int lat, int lon){
-  unsigned int x_reg = (lon == 180) ? 0 : floor(-2*lon +359);
-  unsigned int y_reg = (lon == 180) ? 0 : floor(2*lat +179);
+unsigned int get_hash(float lat, float lon){
+  unsigned int x_reg = (lon == 180.0) ? 0 : floor(-2*lon +359);
+  unsigned int y_reg = (lon == 180.0) ? 0 : floor(2*lat +179);
   unsigned int region = x_reg + y_reg * 719 + 1;
   unsigned int hash_func = region + hash_offset;
   return hash_func;
 }
 
-String get_table_entry(){
+String get_table_entry(float lat, float lon){
   String line;
+  unsigned int hash_func = get_hash(lat, lon);
+  
   File index_file = SD.open("index.txt");
   index_file.seek(hash_func*15);
   
@@ -392,6 +403,32 @@ String get_table_entry(){
 
   File table_file = SD.open("table.txt");
   table_file.seek(table_index*35);
+  
+  int i = 0;
+  float dist_thresh = 1000000000;
+  struct zone closest_zone;
+  do{
+    String entry = table_file.readStringUntil('\n');
+    zone_buf[i].lat = entry.substring(1, 13).toFloat();
+    zone_buf[i].lon = entry.substring(15, 26).toFloat();
+    zone_buf[i].dist = entry.substring(28, 34).toFloat();
+    float dist_center = calc_dist(curr_lat, curr_lon, zone_buf[i].lat, zone_buf[i].lon);
+    float dist_rad = dist_center - zone_buf[i].dist;
+    if(dist_rad < 0){
+      //Sonar alarma--
+    }
+    if(dist_rad < dist_thresh){
+      dist_thresh = dist_rad;
+      closest_zone = zone_buf[i];    
+    }
+    i++;
+  } while(i < entry_len);
+
+  
+  
+  
+  
+  
   
 }
 
