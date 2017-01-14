@@ -1,0 +1,431 @@
+desc: (none)
+cmd: ./main ms_print massif.out.*
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=2174499
+mem_heap_B=72704
+mem_heap_extra_B=8
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=2279095
+mem_heap_B=72716
+mem_heap_extra_B=20
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=2279999
+mem_heap_B=72740
+mem_heap_extra_B=36
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=2280579
+mem_heap_B=72740
+mem_heap_extra_B=36
+mem_stacks_B=0
+heap_tree=detailed
+n2: 72740 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4EBBADE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+  n1: 72704 0x40107C8: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x40108D9: _dl_init (dl-init.c:30)
+    n1: 72704 0x4000CD8: ??? (in /lib/x86_64-linux-gnu/ld-2.24.so)
+     n1: 72704 0x1: ???
+      n1: 72704 0xFFF000205: ???
+       n1: 72704 0xFFF00020C: ???
+        n0: 72704 0xFFF000215: ???
+ n0: 36 in 1 place, below massif's threshold (1.00%)
+#-----------
+snapshot=5
+#-----------
+time=2280579
+mem_heap_B=72728
+mem_heap_extra_B=24
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=2281092
+mem_heap_B=72776
+mem_heap_extra_B=32
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=2281802
+mem_heap_B=72752
+mem_heap_extra_B=16
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=2282377
+mem_heap_B=72824
+mem_heap_extra_B=32
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=2282637
+mem_heap_B=72896
+mem_heap_extra_B=48
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=2282897
+mem_heap_B=72968
+mem_heap_extra_B=64
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=2283157
+mem_heap_B=73040
+mem_heap_extra_B=80
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=2283860
+mem_heap_B=73052
+mem_heap_extra_B=92
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=2284991
+mem_heap_B=73076
+mem_heap_extra_B=108
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=2285571
+mem_heap_B=73064
+mem_heap_extra_B=96
+mem_stacks_B=0
+heap_tree=detailed
+n2: 73064 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4EBBADE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+  n1: 72704 0x40107C8: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x40108D9: _dl_init (dl-init.c:30)
+    n1: 72704 0x4000CD8: ??? (in /lib/x86_64-linux-gnu/ld-2.24.so)
+     n1: 72704 0x1: ???
+      n1: 72704 0xFFF000205: ???
+       n1: 72704 0xFFF00020C: ???
+        n0: 72704 0xFFF000215: ???
+ n0: 360 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=15
+#-----------
+time=2286351
+mem_heap_B=73076
+mem_heap_extra_B=108
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=2287521
+mem_heap_B=73100
+mem_heap_extra_B=124
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=2288101
+mem_heap_B=73088
+mem_heap_extra_B=112
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=2289013
+mem_heap_B=73100
+mem_heap_extra_B=124
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=2292527
+mem_heap_B=73112
+mem_heap_extra_B=136
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=2293480
+mem_heap_B=73136
+mem_heap_extra_B=152
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=2294060
+mem_heap_B=73124
+mem_heap_extra_B=140
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=2295766
+mem_heap_B=73160
+mem_heap_extra_B=160
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=2296787
+mem_heap_B=73148
+mem_heap_extra_B=148
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=2298053
+mem_heap_B=73124
+mem_heap_extra_B=132
+mem_stacks_B=0
+heap_tree=detailed
+n2: 73124 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4EBBADE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+  n1: 72704 0x40107C8: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x40108D9: _dl_init (dl-init.c:30)
+    n1: 72704 0x4000CD8: ??? (in /lib/x86_64-linux-gnu/ld-2.24.so)
+     n1: 72704 0x1: ???
+      n1: 72704 0xFFF000205: ???
+       n1: 72704 0xFFF00020C: ???
+        n0: 72704 0xFFF000215: ???
+ n0: 420 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=25
+#-----------
+time=2303648
+mem_heap_B=77220
+mem_heap_extra_B=140
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=2340634
+mem_heap_B=77220
+mem_heap_extra_B=140
+mem_stacks_B=0
+heap_tree=peak
+n3: 77220 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4EBBADE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+  n1: 72704 0x40107C8: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x40108D9: _dl_init (dl-init.c:30)
+    n1: 72704 0x4000CD8: ??? (in /lib/x86_64-linux-gnu/ld-2.24.so)
+     n1: 72704 0x1: ???
+      n1: 72704 0xFFF000205: ???
+       n1: 72704 0xFFF00020C: ???
+        n0: 72704 0xFFF000215: ???
+ n1: 4096 0x543D380: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x544C874: _IO_doallocbuf (genops.c:398)
+   n1: 4096 0x544BA46: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:828)
+    n1: 4096 0x544A11B: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1339)
+     n1: 4096 0x543EA79: fwrite (iofwrite.c:39)
+      n1: 4096 0x4F429F4: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+       n1: 4096 0x4F42D55: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+        n1: 4096 0x10BBBC: check_areas(Quadtree const&, float, float, float) (in /media/sergio/A8F0BDFDF0BDD1B4/Users/Sergio/Documents/GPSPassive/Geofencing/Pruebas/Quadtree/main)
+         n0: 4096 0x10C06B: main (in /media/sergio/A8F0BDFDF0BDD1B4/Users/Sergio/Documents/GPSPassive/Geofencing/Pruebas/Quadtree/main)
+ n0: 420 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=27
+#-----------
+time=2340634
+mem_heap_B=77184
+mem_heap_extra_B=120
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=2341428
+mem_heap_B=77196
+mem_heap_extra_B=132
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=2342381
+mem_heap_B=77220
+mem_heap_extra_B=148
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=30
+#-----------
+time=2342961
+mem_heap_B=77208
+mem_heap_extra_B=136
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=2370303
+mem_heap_B=77184
+mem_heap_extra_B=120
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=2371097
+mem_heap_B=77196
+mem_heap_extra_B=132
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=33
+#-----------
+time=2372050
+mem_heap_B=77220
+mem_heap_extra_B=148
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=2372630
+mem_heap_B=77208
+mem_heap_extra_B=136
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=2413185
+mem_heap_B=77184
+mem_heap_extra_B=120
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=2414094
+mem_heap_B=77112
+mem_heap_extra_B=104
+mem_stacks_B=0
+heap_tree=detailed
+n3: 77112 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 72704 0x4EBBADE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+  n1: 72704 0x40107C8: call_init.part.0 (dl-init.c:72)
+   n1: 72704 0x40108D9: _dl_init (dl-init.c:30)
+    n1: 72704 0x4000CD8: ??? (in /lib/x86_64-linux-gnu/ld-2.24.so)
+     n1: 72704 0x1: ???
+      n1: 72704 0xFFF000205: ???
+       n1: 72704 0xFFF00020C: ???
+        n0: 72704 0xFFF000215: ???
+ n1: 4096 0x543D380: _IO_file_doallocate (filedoalloc.c:101)
+  n1: 4096 0x544C874: _IO_doallocbuf (genops.c:398)
+   n1: 4096 0x544BA46: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:828)
+    n1: 4096 0x544A11B: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1339)
+     n1: 4096 0x543EA79: fwrite (iofwrite.c:39)
+      n1: 4096 0x4F429F4: std::basic_ostream<char, std::char_traits<char> >& std::__ostream_insert<char, std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+       n1: 4096 0x4F42D55: std::basic_ostream<char, std::char_traits<char> >& std::operator<< <std::char_traits<char> >(std::basic_ostream<char, std::char_traits<char> >&, char const*) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.22)
+        n1: 4096 0x10BBBC: check_areas(Quadtree const&, float, float, float) (in /media/sergio/A8F0BDFDF0BDD1B4/Users/Sergio/Documents/GPSPassive/Geofencing/Pruebas/Quadtree/main)
+         n0: 4096 0x10C06B: main (in /media/sergio/A8F0BDFDF0BDD1B4/Users/Sergio/Documents/GPSPassive/Geofencing/Pruebas/Quadtree/main)
+ n0: 312 in 5 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=37
+#-----------
+time=2414266
+mem_heap_B=77088
+mem_heap_extra_B=88
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=2414346
+mem_heap_B=77016
+mem_heap_extra_B=72
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=2414539
+mem_heap_B=76944
+mem_heap_extra_B=56
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=2414711
+mem_heap_B=76920
+mem_heap_extra_B=40
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=2414791
+mem_heap_B=76848
+mem_heap_extra_B=24
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=2414936
+mem_heap_B=76800
+mem_heap_extra_B=16
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=2424359
+mem_heap_B=4096
+mem_heap_extra_B=8
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=2426011
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
